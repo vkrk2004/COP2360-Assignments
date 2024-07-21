@@ -4,9 +4,7 @@ class HomeSales
 {
     static void Main()
     {
-        double totalD = 0.0;
-        double totalE = 0.0;
-        double totalF = 0.0;
+        double totalD = 0.0, totalE = 0.0, totalF = 0.0;
         char initial;
         double saleAmount;
 
@@ -23,46 +21,24 @@ class HomeSales
 
             if (initial != 'D' && initial != 'E' && initial != 'F')
             {
-                Console.WriteLine("Error: Invalid initial entered. Please enter D, E, or F.");
+                Console.WriteLine("Error: Invalid initial. Please enter D, E, or F.");
                 continue;
             }
 
-            Console.Write("Enter the amount of the sale: ");
+            Console.Write("Enter the sale amount: ");
             if (!double.TryParse(Console.ReadLine(), out saleAmount))
             {
-                Console.WriteLine("Error: Invalid sale amount entered. Please enter a valid number.");
+                Console.WriteLine("Error: Invalid sale amount. Please enter a valid number.");
                 continue;
             }
 
-            switch (initial)
-            {
-                case 'D':
-                    totalD += saleAmount;
-                    break;
-                case 'E':
-                    totalE += saleAmount;
-                    break;
-                case 'F':
-                    totalF += saleAmount;
-                    break;
-            }
+            if (initial == 'D') totalD += saleAmount;
+            else if (initial == 'E') totalE += saleAmount;
+            else if (initial == 'F') totalF += saleAmount;
         }
 
         double grandTotal = totalD + totalE + totalF;
-        string highestSalesperson = "D";
-        double highestTotal = totalD;
-
-        if (totalE > highestTotal)
-        {
-            highestSalesperson = "E";
-            highestTotal = totalE;
-        }
-
-        if (totalF > highestTotal)
-        {
-            highestSalesperson = "F";
-            highestTotal = totalF;
-        }
+        string highestSalesperson = totalD > totalE ? (totalD > totalF ? "D" : "F") : (totalE > totalF ? "E" : "F");
 
         Console.WriteLine("\nSales Summary:");
         Console.WriteLine($"Total sales by Danielle (D): ${totalD:F2}");

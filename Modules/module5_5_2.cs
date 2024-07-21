@@ -1,28 +1,34 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 class TemperaturesComparison
 {
     static void Main()
     {
-        List<double> temperatures = new List<double>();
+        double[] temperatures = new double[5];
 
         for (int i = 0; i < 5; i++)
         {
             double temp = GetTemperatureInput($"Enter temperature {i + 1}: ");
-            temperatures.Add(temp);
+            temperatures[i] = temp;
         }
 
         // Check the order of temperatures
-        bool ascending = temperatures.Zip(temperatures.Skip(1), (a, b) => a <= b).All(x => x);
-        bool descending = temperatures.Zip(temperatures.Skip(1), (a, b) => a >= b).All(x => x);
+        bool gettingWarmer = true;
+        bool gettingCooler = true;
 
-        if (ascending)
+        for (int i = 1; i < temperatures.Length; i++)
+        {
+            if (temperatures[i] < temperatures[i - 1])
+                gettingWarmer = false;
+            if (temperatures[i] > temperatures[i - 1])
+                gettingCooler = false;
+        }
+
+        if (gettingWarmer)
         {
             Console.WriteLine("Getting warmer");
         }
-        else if (descending)
+        else if (gettingCooler)
         {
             Console.WriteLine("Getting cooler");
         }
@@ -33,7 +39,12 @@ class TemperaturesComparison
 
         // Display temperatures and average
         Console.WriteLine("Temperatures entered: " + string.Join(", ", temperatures));
-        double averageTemp = temperatures.Average();
+        double averageTemp = 0;
+        foreach (double temp in temperatures)
+        {
+            averageTemp += temp;
+        }
+        averageTemp /= temperatures.Length;
         Console.WriteLine($"Average temperature: {averageTemp:F2}°F");
     }
 

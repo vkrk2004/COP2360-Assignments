@@ -19,21 +19,21 @@ class HomeSales2
     static void AddSales(char initial, double saleAmount)
     {
         int index = FindSalespersonIndex(initial);
-        if (index != -1)
-        {
-            sales[index] += saleAmount;
-            grandTotal += saleAmount;
-            if (saleAmount > highestSale)
-            {
-                highestSale = saleAmount;
-                highestSalePerson = salespeople[index];
-            }
-            Console.WriteLine($"Added ${saleAmount} to {salespeople[index]}'s sales.");
-        }
-        else
+        if (index == -1)
         {
             Console.WriteLine("Salesperson not found.");
+            return;
         }
+
+        sales[index] += saleAmount;
+        grandTotal += saleAmount;
+
+        if (saleAmount > highestSale)
+        {
+            highestSale = saleAmount;
+            highestSalePerson = salespeople[index];
+        }
+        Console.WriteLine($"Added ${saleAmount} to {salespeople[index]}'s sales.");
     }
 
     static void PrintSales()
@@ -52,6 +52,7 @@ class HomeSales2
             char initial = char.ToUpper(Console.ReadKey().KeyChar);
             Console.WriteLine();
             if (initial == 'Q') break;
+
             if (Array.IndexOf(initials, initial) == -1)
             {
                 Console.WriteLine("Invalid input. Please enter D, E, or F.");
