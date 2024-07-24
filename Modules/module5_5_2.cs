@@ -2,7 +2,7 @@ using System;
 
 class TemperaturesComparison
 {
-    static void Main()
+    internal void Compare()
     {
         double[] temperatures = new double[5];
 
